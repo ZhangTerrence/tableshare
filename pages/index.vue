@@ -1,5 +1,19 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+definePageMeta({
+  middleware: ["authenticated"],
+});
+
+const { user, clear: clearSession } = useUserSession();
+
+async function logout() {
+  await clearSession();
+  await navigateTo("/login");
+}
+</script>
 
 <template>
-  <h1>Home Page</h1>
+  <div>
+    <h1>Welcome {{ user?.username }}</h1>
+    <button @click="logout">Logout</button>
+  </div>
 </template>

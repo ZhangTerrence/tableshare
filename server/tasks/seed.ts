@@ -1,25 +1,25 @@
-import { useDrizzle } from "~/server/utils/drizzle";
+import { useDrizzle } from "~/server/utils/database";
 
 export default defineTask({
   meta: {
     name: "db:seed",
-    description: "Run database seed task",
+    description: "Run database seed task.",
   },
   async run() {
-    console.log("Running DB seed task...");
+    console.log("Running database seed task...");
     const users = [
       {
         username: "John Doe",
         email: "john@example.com",
-        password: "password123",
+        password: "@Password123",
       },
       {
         username: "Jane Doe",
         email: "jane@example.com",
-        password: "password123",
+        password: "@Password123",
       },
     ];
     await useDrizzle().insert(tables.users).values(users);
-    return { result: "success" };
+    return { result: "success", users };
   },
 });

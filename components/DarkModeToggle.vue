@@ -11,16 +11,13 @@ const isDark = computed({
 </script>
 
 <template>
-  <ClientOnly fallback-tag="div">
+  <ClientOnly>
     <UButton
-      :icon="isDark ? 'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'"
-      color="gray"
-      variant="ghost"
+      :icon="isDark ? 'i-lucide-moon' : 'i-lucide-sun'"
+      color="white"
+      variant="soft"
       aria-label="Theme"
       @click="isDark = !isDark"
     />
-    <template #fallback>
-      <div class="w-8 h-8" />
-    </template>
   </ClientOnly>
 </template>
