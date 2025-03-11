@@ -40,7 +40,7 @@ async function register(event: FormSubmitEvent<Schema>) {
     },
     async onResponse() {
       await refreshSession();
-      await navigateTo("/");
+      await navigateTo("/dashboard");
     },
     async onResponseError() {
       toast.add({
@@ -52,23 +52,23 @@ async function register(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <main class="h-full py-24">
+  <main class="min-h-screen py-48">
     <UContainer>
       <div class="space-y-4">
         <h1 class="text-4xl leading-tight">
           <strong>Register</strong>
         </h1>
         <UDivider />
-        <UForm :schema="schema" :state="state" @submit="register" class="space-y-4">
-          <UFormGroup label="Username" name="username" :required="true" size="lg">
+        <UForm :schema="schema" :state="state" @submit="register" class="space-y-6">
+          <UFormGroup label="Username" name="username" :required="true" size="lg" class="space-y-4">
             <UInput v-model="state.username" placeholder="JohnDoe" />
           </UFormGroup>
 
-          <UFormGroup label="Email" name="email" :required="true" size="lg">
+          <UFormGroup label="Email" name="email" :required="true" size="lg" class="space-y-4">
             <UInput v-model="state.email" placeholder="you@example.com" />
           </UFormGroup>
 
-          <UFormGroup label="Password" name="password" :required="true" size="lg">
+          <UFormGroup label="Password" name="password" :required="true" size="lg" class="space-y-4">
             <UInput v-model="state.password" type="password" placeholder="@Password123" />
           </UFormGroup>
 
