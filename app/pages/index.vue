@@ -1,23 +1,23 @@
+<script setup lang="ts">
+definePageMeta({
+  layout: "unprotected",
+});
+</script>
+
 <template>
-  <div class="flex h-screen flex-col items-center justify-center gap-4">
-    <h1 class="text-2xl font-bold text-(--ui-primary)">Nuxt UI v3</h1>
-
-    <div class="flex items-center gap-2">
-      <UButton
-        label="Documentation"
-        icon="i-lucide-square-play"
-        to="https://ui3.nuxt.dev/getting-started/installation/nuxt"
-        target="_blank"
-      />
-
-      <UButton
-        label="GitHub"
-        color="neutral"
-        variant="outline"
-        icon="i-simple-icons-github"
-        to="https://github.com/nuxt/ui"
-        target="_blank"
-      />
-    </div>
-  </div>
+  <main class="h-fit">
+    <UContainer
+      class="flex min-h-screen items-center max-lg:flex-col max-lg:justify-center max-lg:gap-y-[2rem] max-lg:py-24"
+    >
+      <div class="space-y-[1rem]">
+        <h1 class="text-6xl max-md:text-4xl">
+          <strong>Design and Share Database Schemas</strong>
+        </h1>
+        <div class="space-x-[1rem]">
+          <UButton to="/register" color="neutral" size="xl" class="max-md:text-sm">Get Started</UButton>
+          <UButton to="/browse" color="neutral" variant="outline" size="xl" class="max-md:text-sm">Browse</UButton>
+        </div>
+      </div>
+    </UContainer>
+  </main>
 </template>
