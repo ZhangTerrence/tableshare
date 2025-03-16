@@ -45,7 +45,8 @@ const items = ref([
 </script>
 
 <template>
-  <nav class="h-full w-full p-2">
+  <nav class="flex h-full w-full flex-col p-2">
     <UTree :items="items" />
+    <UButton to="/browse" variant="outline" size="lg" class="mt-auto">Browse</UButton>
   </nav>
 </template>

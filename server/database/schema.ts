@@ -11,3 +11,16 @@ export const users = sqliteTable("users", {
     .default(sql`CURRENT_TIMESTAMP`)
     .$onUpdate(() => sql`CURRENT_TIMESTAMP`),
 });
+
+export const schemas = sqliteTable("schemas", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  authorId: integer("author_id")
+    .notNull()
+    .references(() => users.id),
+  type: text("type", { enum: ["mysql", "sqlite", "postgresql"] }).notNull(),
+  sql: text("sql").default("").notNull(),
+  createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`),
+  updatedAt: text("updated_at")
+    .default(sql`CURRENT_TIMESTAMP`)
+    .$onUpdate(() => sql`CURRENT_TIMESTAMP`),
+});
