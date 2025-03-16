@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import { z } from "zod";
+import type { FormSubmitEvent } from "#ui/types";
+
 definePageMeta({
   layout: "unprotected",
 });
-
-import { z } from "zod";
-import type { FormSubmitEvent } from "#ui/types";
 
 const schema = z.object({
   username: z
@@ -25,6 +25,7 @@ const state = reactive<Partial<Schema>>({
   password: undefined,
 });
 
+const { fetch: refreshSession } = useUserSession();
 const toast = useToast();
 
 async function login(event: FormSubmitEvent<Schema>) {
@@ -34,14 +35,16 @@ async function login(event: FormSubmitEvent<Schema>) {
       username: event.data.username,
       password: event.data.password,
     },
-    async onResponse() {
-      await navigateTo("/dashboard");
-    },
-    async onResponseError({ response }) {
-      toast.add({
-        title: "Error logging in.",
-        description: response._data.message,
-      });
+    async onResponse({ response }) {
+      if (response.ok) {
+        await refreshSession();
+        await navigateTo("/dashboard");
+      } else {
+        toast.add({
+          title: "Error logging in.",
+          description: response._data.message,
+        });
+      }
     },
   });
 }

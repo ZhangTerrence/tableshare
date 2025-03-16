@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import { z } from "zod";
+import type { FormSubmitEvent } from "#ui/types";
+
 definePageMeta({
   layout: "unprotected",
 });
-
-import { z } from "zod";
-import type { FormSubmitEvent } from "#ui/types";
 
 const schema = z.object({
   username: z
@@ -27,6 +27,7 @@ const state = reactive<Partial<Schema>>({
   password: undefined,
 });
 
+const { fetch: refreshSession } = useUserSession();
 const toast = useToast();
 
 async function register(event: FormSubmitEvent<Schema>) {
@@ -37,13 +38,15 @@ async function register(event: FormSubmitEvent<Schema>) {
       email: event.data.email,
       password: event.data.password,
     },
-    async onResponse() {
-      await navigateTo("/dashboard");
-    },
-    async onResponseError() {
-      toast.add({
-        title: "Error registering user.",
-      });
+    async onResponse({ response }) {
+      if (response.ok) {
+        await refreshSession();
+        await navigateTo("/dashboard");
+      } else {
+        toast.add({
+          title: "Error registering user.",
+        });
+      }
     },
   });
 }
