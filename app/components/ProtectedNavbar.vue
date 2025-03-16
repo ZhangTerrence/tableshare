@@ -24,14 +24,12 @@ const items = ref([
 
 <template>
   <nav class="flex w-screen justify-between border-b p-2">
-    <UButton to="/dashboard" variant="link" size="xl" class="flex items-center">
-      <template #leading>
-        <UIcon name="i-lucide-database-zap" />
-      </template>
+    <UButton to="/dashboard" leading-icon="i-lucide-database-zap" variant="link" size="xl" class="flex items-center">
       TableShare
     </UButton>
     <div class="flex items-center gap-x-2">
       <DarkModeToggle />
+      <RepoLink />
       <UDropdownMenu :items="items">
         <UButton icon="i-lucide-user" variant="outline">{{ user?.username }}</UButton>
       </UDropdownMenu>

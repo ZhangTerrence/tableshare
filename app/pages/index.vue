@@ -19,5 +19,6 @@ definePageMeta({
         </div>
       </div>
     </UContainer>
+    <UContainer class="min-h-screen py-24">Hello, world.</UContainer>
   </main>
 </template>
