@@ -28,6 +28,7 @@
     "drizzle-kit": "^0.30.5",
     "eslint": "^9.22.0",
     "nuxt-auth-utils": "^0.5.16",
+    "nuxt-codemirror": "^0.0.14",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "typescript": "^5.8.2",

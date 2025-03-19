@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { SplitterGroup, SplitterPanel, SplitterResizeHandle } from "reka-ui";
+import CodeEditor from "~/components/CodeEditor.vue";
 
 definePageMeta({
   layout: "protected",
@@ -10,13 +11,11 @@ definePageMeta({
 <template>
   <div class="grow">
     <SplitterGroup direction="horizontal">
-      <SplitterPanel :min-size="15" :max-size="25" :default-size="20">
-        <DashboardSidebar />
+      <SplitterPanel :default-size="30">
+        <CodeEditor />
       </SplitterPanel>
       <SplitterResizeHandle class="border-r" />
-      <SplitterPanel :default-size="80">
-        <UserDashboard />
-      </SplitterPanel>
+      <SplitterPanel :default-size="70"></SplitterPanel>
     </SplitterGroup>
   </div>
 </template>

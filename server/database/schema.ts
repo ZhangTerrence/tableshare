@@ -17,6 +17,9 @@ export const schemas = sqliteTable("schemas", {
   authorId: integer("author_id")
     .notNull()
     .references(() => users.id),
+  name: text("name").notNull(),
+  description: text("description").default(""),
+  private: integer("private", { mode: "boolean" }).notNull(),
   type: text("type", { enum: ["mysql", "sqlite", "postgresql"] }).notNull(),
   sql: text("sql").default("").notNull(),
   createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`),

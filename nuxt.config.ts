@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxthub/core",
     "nuxt-auth-utils",
+    "nuxt-codemirror",
   ],
 
   css: ["~/assets/css/main.css"],
