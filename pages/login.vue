@@ -7,9 +7,7 @@ definePageMeta({
 });
 
 const schema = z.object({
-  username: z
-    .string()
-    .regex(/^[a-zA-Z0-9]*.{3,31}$/, "The user's username must have between 3 and 31 alphanumeric characters."),
+  email: z.string().email("The user's email is invalid."),
   password: z
     .string()
     .regex(
@@ -21,31 +19,27 @@ const schema = z.object({
 type Schema = z.output<typeof schema>;
 
 const state = reactive<Partial<Schema>>({
-  username: undefined,
+  email: undefined,
   password: undefined,
 });
 
-// const { fetch: refreshSession } = useUserSession();
+const supabase = useSupabaseClient();
 const toast = useToast();
 
 async function login(event: FormSubmitEvent<Schema>) {
-  await useFetch("/api/auth/login", {
-    method: "POST",
-    body: {
-      username: event.data.username,
-      password: event.data.password,
-    },
-    async onResponse({ response }) {
-      if (response.ok) {
-        await navigateTo("/dashboard");
-      } else {
-        toast.add({
-          title: "Error logging in.",
-          description: response._data.message,
-        });
-      }
-    },
+  const { error } = await supabase.auth.signInWithPassword({
+    email: event.data.email,
+    password: event.data.password,
   });
+
+  if (error) {
+    toast.add({
+      title: error.name,
+      description: error.message,
+    });
+  }
+
+  await navigateTo("/dashboard");
 }
 </script>
 
@@ -58,8 +52,8 @@ async function login(event: FormSubmitEvent<Schema>) {
         </h1>
         <USeparator />
         <UForm :schema="schema" :state="state" @submit="login" class="space-y-[2rem]">
-          <UFormField label="Username" name="username" :required="true" size="lg" class="space-y-[1rem]">
-            <UInput v-model="state.username" placeholder="JohnDoe" class="w-full" />
+          <UFormField label="Email" name="email" :required="true" size="lg" class="space-y-[1rem]">
+            <UInput v-model="state.email" placeholder="you@example.com" class="w-full" />
           </UFormField>
 
           <UFormField label="Password" name="password" :required="true" size="lg" class="space-y-[1rem]">
