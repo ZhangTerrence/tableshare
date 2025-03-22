@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-screen w-screen flex-col">
-    <NavbarUnprotected />
+    <NavbarProtected />
     <slot />
   </div>
 </template>

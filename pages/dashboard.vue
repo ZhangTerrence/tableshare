@@ -1,26 +1,20 @@
 <script setup lang="ts">
+import { SplitterGroup, SplitterPanel, SplitterResizeHandle } from "reka-ui";
+
 definePageMeta({
+  layout: "protected",
   middleware: ["auth"],
 });
-
-const supabase = useSupabaseClient();
-const toast = useToast();
-
-async function logout() {
-  const { error } = await supabase.auth.signOut();
-
-  if (error) {
-    toast.add({
-      title: error.name,
-      description: error.message,
-    });
-  }
-
-  await navigateTo("/login");
-}
 </script>
 
 <template>
-  <div>Hello, world.</div>
-  <UButton @click="logout">Logout</UButton>
+  <main class="grow">
+    <SplitterGroup direction="horizontal">
+      <SplitterPanel :min-size="15" :max-size="25" :default-size="20">Hello, world.</SplitterPanel>
+      <SplitterResizeHandle class="border-r" />
+      <SplitterPanel :default-size="80">
+        <UserDashboard />
+      </SplitterPanel>
+    </SplitterGroup>
+  </main>
 </template>

@@ -27,28 +27,21 @@ const state = reactive<Partial<Schema>>({
   password: undefined,
 });
 
-const supabase = useSupabaseClient();
 const toast = useToast();
 
 async function register(event: FormSubmitEvent<Schema>) {
-  const { error } = await supabase.auth.signUp({
-    email: event.data.email,
-    password: event.data.password,
-    options: {
-      data: {
-        username: event.data.username,
-      },
+  await useFetch("/api/auth/register", {
+    method: "POST",
+    body: event.data,
+    headers: useRequestHeaders(["cookie"]),
+    async onResponse({ response }) {
+      if (response.ok) {
+        await navigateTo("/login");
+      } else {
+        toast.add(response._data);
+      }
     },
   });
-
-  if (error) {
-    toast.add({
-      title: error.name,
-      description: error.message,
-    });
-  }
-
-  await navigateTo("/login");
 }
 </script>
 

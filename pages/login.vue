@@ -23,23 +23,21 @@ const state = reactive<Partial<Schema>>({
   password: undefined,
 });
 
-const supabase = useSupabaseClient();
 const toast = useToast();
 
 async function login(event: FormSubmitEvent<Schema>) {
-  const { error } = await supabase.auth.signInWithPassword({
-    email: event.data.email,
-    password: event.data.password,
+  await useFetch("/api/auth/login", {
+    method: "POST",
+    body: event.data,
+    headers: useRequestHeaders(["cookie"]),
+    async onResponse({ response }) {
+      if (response.ok) {
+        await navigateTo("/dashboard");
+      } else {
+        toast.add(response._data);
+      }
+    },
   });
-
-  if (error) {
-    toast.add({
-      title: error.name,
-      description: error.message,
-    });
-  }
-
-  await navigateTo("/dashboard");
 }
 </script>
 
