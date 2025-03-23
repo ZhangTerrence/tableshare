@@ -50,21 +50,21 @@ async function login(event: FormSubmitEvent<Schema>) {
         </h1>
         <USeparator />
         <UForm :schema="schema" :state="state" @submit="login" class="space-y-[2rem]">
-          <UFormField label="Email" name="email" :required="true" size="lg" class="space-y-[1rem]">
+          <UFormField label="Email" name="email" :required="true" class="space-y-[1rem]">
             <UInput v-model="state.email" placeholder="you@example.com" class="w-full" />
           </UFormField>
 
-          <UFormField label="Password" name="password" :required="true" size="lg" class="space-y-[1rem]">
+          <UFormField label="Password" name="password" :required="true" class="space-y-[1rem]">
             <UInput v-model="state.password" type="password" placeholder="@Password123" class="w-full" />
           </UFormField>
 
-          <UButton type="submit" size="lg" class="w-full justify-center">Submit</UButton>
+          <UButton type="submit" class="w-full justify-center">Submit</UButton>
         </UForm>
         <p class="self-center">or you can login with</p>
         <div class="space-x-[1rem] self-center">
-          <UButton icon="i-ant-design-google-outline" size="lg">Google</UButton>
-          <UButton icon="i-ant-design-github-filled" size="lg">Github</UButton>
-          <UButton icon="i-ant-design-linkedin-filled" size="lg">LinkedIn</UButton>
+          <UButton icon="i-ant-design-google-outline">Google</UButton>
+          <UButton icon="i-ant-design-github-filled">Github</UButton>
+          <UButton icon="i-ant-design-linkedin-filled">LinkedIn</UButton>
         </div>
       </div>
     </UContainer>
