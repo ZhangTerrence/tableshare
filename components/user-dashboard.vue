@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import type { Schema } from "~/types/schema";
+import type { Schema } from "~/types/api/schema";
 
 const { data: schemas } = useFetch<Schema[], {}>("/api/schemas");
-console.log(schemas);
 </script>
 
 <template>

@@ -3,6 +3,7 @@ import { Codemirror } from "vue-codemirror";
 import { PostgreSQL, sql, type SQLConfig } from "@codemirror/lang-sql";
 import { vscodeKeymap } from "@replit/codemirror-vscode-keymap";
 import { keymap } from "@codemirror/view";
+import { type AST, Parser } from "node-sql-parser";
 
 const sqlOptions: SQLConfig = {
   dialect: PostgreSQL,
@@ -11,6 +12,15 @@ const sqlOptions: SQLConfig = {
 
 const code = ref("");
 const view = shallowRef();
+
+const emit = defineEmits<{ (e: "update-ast", ast: AST[]): void }>();
+const parseSql = (sql: string, dialect?: string) => {
+  const parser = new Parser();
+  const ast = parser.astify(sql, {
+    database: dialect,
+  });
+  emit("update-ast", [ast].flat());
+};
 </script>
 
 <template>
@@ -23,7 +33,6 @@ const view = shallowRef();
     :tab-size="2"
     :extensions="[sql(sqlOptions), keymap.of(vscodeKeymap)]"
     @ready="(payload) => (view = payload.view)"
+    @change="(value, _) => parseSql(value, 'PostgresQL')"
   />
 </template>
-
-<style scoped lang="css"></style>
