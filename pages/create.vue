@@ -26,7 +26,9 @@ const ast = ref<AST[]>([]);
         <CodeEditor @update-ast="(updatedAst) => (ast = updatedAst)" />
       </SplitterPanel>
       <SplitterResizeHandle class="border-r" />
-      <SplitterPanel :default-size="60">Hello world.</SplitterPanel>
+      <SplitterPanel :default-size="60">
+        <SchemaView />
+      </SplitterPanel>
     </SplitterGroup>
   </main>
 </template>
