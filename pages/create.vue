@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { SplitterGroup, SplitterPanel, SplitterResizeHandle } from "reka-ui";
-import type { AST } from "node-sql-parser";
+import type { Database } from "~/types/database";
 
 definePageMeta({
   layout: "protected",
@@ -16,17 +16,19 @@ onMounted(() => {
   });
 });
 
-const ast = ref<AST[]>([]);
+const schema = ref<Database>([]);
 </script>
 
 <template>
   <main class="grow overflow-y-scroll">
     <SplitterGroup direction="horizontal">
       <SplitterPanel :default-size="40" class="flex overflow-y-scroll">
-        <CodeEditor @update-ast="(updatedAst) => (ast = updatedAst)" />
+        <CodeEditor @update-schema="(updatedSchema) => (schema = updatedSchema)" />
       </SplitterPanel>
       <SplitterResizeHandle class="border-r" />
-      <SplitterPanel :default-size="60">Hello world.</SplitterPanel>
+      <SplitterPanel :default-size="60">
+        <SchemaView :schema="schema" />
+      </SplitterPanel>
     </SplitterGroup>
   </main>
 </template>

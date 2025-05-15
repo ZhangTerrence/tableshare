@@ -30,19 +30,25 @@ const state = reactive<Partial<Schema>>({
 const toast = useToast();
 
 async function register(event: FormSubmitEvent<Schema>) {
-  await useFetch("/api/auth/register", {
-    method: "POST",
-    body: event.data,
-    headers: useRequestHeaders(["cookie"]),
-    async onResponse({ response }) {
-      if (response.ok) {
-        await navigateTo("/login");
-      } else {
-        toast.add(response._data);
-      }
-    },
-  });
+  try {
+    await $fetch("/api/auth/register", {
+      method: "POST",
+      body: event.data,
+      headers: useRequestHeaders(["cookie"]),
+    });
+  } catch (error) {
+    const authError = error as { data: { title: string; description: string } };
+    toast.add(authError.data);
+  }
 }
+
+const user = useSupabaseUser();
+
+watch(user, (authUser, _) => {
+  if (authUser) {
+    return navigateTo("/dashboard");
+  }
+});
 </script>
 
 <template>
@@ -53,7 +59,7 @@ async function register(event: FormSubmitEvent<Schema>) {
           <strong>Register</strong>
         </h1>
         <USeparator />
-        <UForm :schema="schema" :state="state" @submit="register" class="space-y-[2rem]">
+        <UForm :schema="schema" :state="state" class="space-y-[2rem]" @submit="register">
           <UFormField label="Username" name="username" :required="true" class="space-y-[1rem]">
             <UInput v-model="state.username" placeholder="JohnDoe" class="w-full" />
           </UFormField>

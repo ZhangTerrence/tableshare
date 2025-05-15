@@ -1,16 +1,12 @@
-export enum SqlType {
-  PSQL,
-  MYSQL,
-  SQLITE,
-}
+import type { SupportedSql } from "~/types/api/supportedSql";
 
-export interface Schema {
+export type Schema = {
   id: number;
   name: string;
   description: string;
   isPrivate: boolean;
-  type: SqlType;
+  type: SupportedSql;
   sql: string;
   createdAt: Date;
   updatedAt: Date;
-}
+};

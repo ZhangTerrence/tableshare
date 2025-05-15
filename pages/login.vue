@@ -26,19 +26,25 @@ const state = reactive<Partial<Schema>>({
 const toast = useToast();
 
 async function login(event: FormSubmitEvent<Schema>) {
-  await useFetch("/api/auth/login", {
-    method: "POST",
-    body: event.data,
-    headers: useRequestHeaders(["cookie"]),
-    async onResponse({ response }) {
-      if (response.ok) {
-        await navigateTo("/dashboard");
-      } else {
-        toast.add(response._data);
-      }
-    },
-  });
+  try {
+    await $fetch("/api/auth/login", {
+      method: "POST",
+      body: event.data,
+      headers: useRequestHeaders(["cookie"]),
+    });
+  } catch (error) {
+    const authError = error as { data: { title: string; description: string } };
+    toast.add(authError.data);
+  }
 }
+
+const user = useSupabaseUser();
+
+watch(user, (authUser, _) => {
+  if (authUser) {
+    return navigateTo("/dashboard");
+  }
+});
 </script>
 
 <template>
@@ -49,7 +55,7 @@ async function login(event: FormSubmitEvent<Schema>) {
           <strong>Login</strong>
         </h1>
         <USeparator />
-        <UForm :schema="schema" :state="state" @submit="login" class="space-y-[2rem]">
+        <UForm :schema="schema" :state="state" class="space-y-[2rem]" @submit="login">
           <UFormField label="Email" name="email" :required="true" class="space-y-[1rem]">
             <UInput v-model="state.email" placeholder="you@example.com" class="w-full" />
           </UFormField>

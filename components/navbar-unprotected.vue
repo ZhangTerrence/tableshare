@@ -1,5 +1,5 @@
 <template>
-  <nav class="flex w-screen justify-between border-b p-2">
+  <nav class="flex justify-between border-b p-2">
     <UButton to="/" leading-icon="i-lucide-database-zap" variant="ghost" class="flex items-center hover:bg-primary">
       TableShare
     </UButton>

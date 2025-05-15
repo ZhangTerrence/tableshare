@@ -32,7 +32,7 @@ const user = useSupabaseUser();
 </script>
 
 <template>
-  <nav class="flex w-screen justify-between border-b p-2">
+  <nav class="flex justify-between border-b p-2">
     <UButton
       to="/dashboard"
       leading-icon="i-lucide-database-zap"
